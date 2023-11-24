@@ -2,12 +2,12 @@ import React from "react";
 import { useState } from "react";
 
 const initialGameBoard = [
-  [null, "X", "O"],
+  [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
 
-const GameBoard = () => {
+const GameBoard = ({ activePlayer, handleSwitchPlayer }) => {
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   function handleSelectSquare(rowIndex, colIndex) {
@@ -15,9 +15,11 @@ const GameBoard = () => {
       const updatedBoard = [
         ...prevGameBoard.map((innerArray) => [...innerArray]),
       ];
-      updatedBoard[rowIndex][colIndex] = "X";
+      updatedBoard[rowIndex][colIndex] = activePlayer;
       return updatedBoard;
     });
+    const nextPlayer = activePlayer === "O" ? "X" : "O";
+    handleSwitchPlayer(nextPlayer);
   }
 
   return (
