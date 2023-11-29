@@ -1,9 +1,14 @@
 import React from "react";
 
-const Log = () => {
+const Log = ({ gameTurns }) => {
   return (
     <ol id='log'>
-      <li></li>
+      {gameTurns.map((turn) => (
+        <li key={`${turn.player}${turn.square.row}${turn.square.col}`}>
+          {/* <li> */}
+          {turn.player} selected {turn.square.row}, {turn.square.col}
+        </li>
+      ))}
     </ol>
   );
 };
