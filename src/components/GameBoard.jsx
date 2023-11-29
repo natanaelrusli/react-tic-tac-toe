@@ -1,5 +1,3 @@
-import React from "react";
-
 const initialGameBoard = [
   [null, null, null],
   [null, null, null],

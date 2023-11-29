@@ -1,33 +1,16 @@
 import { useState } from "react";
-
 import GameBoard from "./components/GameBoard";
 import Player from "./components/Player";
 import Log from "./components/Log";
-import GameOver from "./components/GameOver";
-
 import { WINNING_COMBINATIONS } from "./winning-combinations";
+import GameOver from "./components/GameOver";
+import { deriveActivePlayer, initialGameBoard } from "./App";
 
-const initialGameBoard = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
-
-function deriveActivePlayer(gameTurns) {
-  let currentPlayer = "X";
-
-  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
-    currentPlayer = "O";
-  }
-
-  return currentPlayer;
-}
-
-function App() {
+export function App() {
   const [gameTurns, setGameTurns] = useState([]);
 
   const activePlayer = deriveActivePlayer(gameTurns);
-  let gameBoard = [...initialGameBoard.map((array) => [...array])];
+  let gameBoard = initialGameBoard;
   let winner = null;
   const hasDraw = gameTurns.length === 9 && !winner;
 
@@ -72,9 +55,8 @@ function App() {
   };
 
   const handleRematch = () => {
+    console.log("handleRematch");
     winner = null;
-    setGameTurns([]);
-    gameBoard = initialGameBoard;
   };
 
   return (
@@ -92,7 +74,7 @@ function App() {
             symbol='O'
           />
         </ol>
-        {(winner || hasDraw) && gameTurns.length > 1 && (
+        {(winner || hasDraw) && (
           <GameOver winner={winner} onRematchClick={handleRematch} />
         )}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
@@ -101,5 +83,3 @@ function App() {
     </main>
   );
 }
-
-export default App;
